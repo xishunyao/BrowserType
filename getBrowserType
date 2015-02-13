@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+ </head>
+ <body>
+  
+ </body>
+ <script>
+
+	var BrowserType = window.BrowserType || {};
+	
+	BrowserType = {
+	
+		getType: function() {
+			var nav = navigator,
+				s = nav.userAgent,
+				v = nav.vendor; 
+	
+			if(v) {
+				if(v.indexOf('Opera') !== -1) {
+					res = 'Opera';
+					return res;
+				}else if(v.indexOf('Apple') !== -1) {
+					res = 'safari';
+					return res;
+				}
+			}
+
+			if(s.indexOf('Chrome') !== -1) {
+				if(nav.languages) {
+					//360目前（6.3）不支持webkitPersistentStorage等以webkit开头的属性
+					res = 'Chrome';
+				}else {
+					res = '360';
+				}
+				return res;
+			}else if(s.indexOf('Firefox') !== -1) {
+				res = 'Firefox';
+				return res;
+			}else if(isIECore()) {
+				if(window.__IE_DEVTOOLBAR_CONSOLE_COMMAND_LINE) {
+					res = '360';
+				}else {
+					if(s.indexOf('MSIE') !== -1) {
+						res = s.split(';')[1].split('.')[0];
+					}else {
+						res = 'MSIE 11';
+					}
+				}
+				return res;
+			}
+		},
+		//判断是否支持ActiveXObject方法
+		isIECore: function() {
+			var boo = true;
+		
+			try{
+				new ActiveXObject("Microsoft.XMLHTTP");
+			}catch(e) {
+				boo = false;
+			}
+			return boo;
+		}
+	};
+
+	//alert result
+	alert(BrowserType.getType());
+ </script>
+</html>
